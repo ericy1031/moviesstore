@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     search_term = request.GET.get('search')
     if search_term:
-        movies = Movie.objects.filter(name__icontains=search_term)
+        movies = Movie.objects.filter(name__icontains=search_term, stock__gt=0)
     else:
-        movies = Movie.objects.all()
+        movies = Movie.objects.filter(stock__gt=0)
     template_data = {}
     template_data['title'] = 'Movies'
     template_data['movies'] = movies
